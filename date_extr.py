@@ -1,5 +1,7 @@
 from natasha import DatesExtractor
 import dateparser
+from datetime import date
+from datetime import datetime
 
 def date_fact_to_date(date_fact):
     """
@@ -8,18 +10,20 @@ def date_fact_to_date(date_fact):
     """
     
     date_str = '{} {} {}'.format(date_fact.day, date_fact.month, date_fact.year)
-    date = dateparser.parse(date_str)
-    return date
+    dat = dateparser.parse(date_str)
+    return dat
 
 
 def guess_date(doc):
     """Guess what"""
-    
+    res = ""
     extractor = DatesExtractor()
     matches = extractor(doc)
     if matches:
+        
         dates = [date_fact_to_date(match.fact) for match in matches]
-        return max(dates).strftime('%Y-%m-%d')
-    else:
-        return ''
+        dates = [dat for dat in dates if dat < datetime.today() and dat > dateparser.parse('2010')]
+        if dates:
+            res = max(dates).strftime('%Y-%m-%d')
+    return res
 
