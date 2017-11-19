@@ -17,13 +17,16 @@ def date_fact_to_date(date_fact):
 def guess_date(doc):
     """Guess what"""
     res = ""
-    extractor = DatesExtractor()
-    matches = extractor(doc)
-    if matches:
-        
-        dates = [date_fact_to_date(match.fact) for match in matches]
-        dates = [dat for dat in dates if dat < datetime.today() and dat > dateparser.parse('2010')]
-        if dates:
-            res = max(dates).strftime('%Y-%m-%d')
+    try:
+        extractor = DatesExtractor()
+        matches = extractor(doc)
+        if matches:
+
+            dates = [date_fact_to_date(match.fact) for match in matches]
+            dates = [dat for dat in dates if dat < datetime.today() and dat > dateparser.parse('2010')]
+            if dates:
+                res = max(dates).strftime('%Y-%m-%d')
+    except Exception as ex:
+        print(ex)
     return res
 
