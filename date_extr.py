@@ -17,6 +17,9 @@ def guess_date(doc):
     
     extractor = DatesExtractor()
     matches = extractor(doc)
-    dates = [date_fact_to_date(match.fact) for match in matches]
-    return max(dates).strftime('%Y-%m-%d')
+    if matches:
+        dates = [date_fact_to_date(match.fact) for match in matches]
+        return max(dates).strftime('%Y-%m-%d')
+    else:
+        return ''
 
