@@ -1,0 +1,4 @@
+dateparser==0.5.1
+natasha==0.7.0
+numpy==1.11.0
+scikit_learn==0.19.1
